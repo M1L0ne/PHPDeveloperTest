@@ -45,6 +45,8 @@
         button:hover {
             background-color: #45a049;
         }
+
+
     </style>
 </head>
 <body>
@@ -59,6 +61,7 @@
         <th>Задача</th>
         <th>Описание</th>
         <th>Дата добавления</th>
+        <th>Статус</th>
     </tr>
     </thead>
     <tbody id="taskTableBody"></tbody>
@@ -74,8 +77,7 @@
 
     $('#task-button').click(function ()
     {
-        console.log("Переход в createtask");
-        location.href = "../createTask";
+        location.href = "../task";
     });
 
     function checkToken()
@@ -100,7 +102,7 @@
     function showTable()
     {
         let tbody = document.getElementById('taskTableBody');
-        let row, idCell, titleCell, descriptionCell, dateCell;
+        let row, idCell, titleCell, descriptionCell, dateCell, statusCell;
 
         $.ajax({
             url: "../api/showTable.php",
@@ -114,19 +116,54 @@
                     titleCell = row.insertCell(1);
                     descriptionCell = row.insertCell(2);
                     dateCell = row.insertCell(3);
+                    statusCell = row.insertCell(4);
 
                     idCell.innerHTML = task.t_id;
                     titleCell.innerHTML = task.t_name;
                     descriptionCell.innerHTML = task.t_desc;
                     dateCell.innerHTML = task.t_date;
+                    if(task.t_isComplete == 1)
+                    {
+                        row.style.backgroundColor = '#c0e2c0';
+                        statusCell.innerHTML = "Выполнено";
+                    }
+                    else
+                        statusCell.innerHTML = "В процессе";
 
                     row.ondblclick = function() {
-                        location.href = '../createTask/?t_id=' + encodeURIComponent(task.t_id);
+                        location.href = '../task/?t_id=' + encodeURIComponent(task.t_id);
                     }
                 });
             }
         })
     }
+
+    //Сортировка
+    $(document).ready(function() {
+        $('th').click(function() {
+            let table = $(this).parents('table').eq(0);
+            let rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+            this.asc = !this.asc;
+            if (!this.asc) {
+                rows = rows.reverse();
+            }
+            for (let i = 0; i < rows.length; i++) {
+                table.append(rows[i]);
+            }
+        });
+
+        function comparer(index) {
+            return function(a, b) {
+                let valA = getCellValue(a, index);
+                let valB = getCellValue(b, index);
+                return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB);
+            };
+        }
+
+        function getCellValue(row, index) {
+            return $(row).children('td').eq(index).text();
+        }
+    });
 
 </script>
 </body>

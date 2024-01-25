@@ -80,7 +80,6 @@
 
     function registration()
     {
-
         username = $('input[name="username"]').val();
         password = $('input[name="password"]').val();
 

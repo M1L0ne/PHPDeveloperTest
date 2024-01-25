@@ -88,7 +88,6 @@
     {
         username = $('input[name="username"]').val();
         password = $('input[name="password"]').val();
-        console.log(username, password);
         $.ajax({
             url: "../api/auth.php",
             method: "POST",
