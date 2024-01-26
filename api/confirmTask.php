@@ -3,9 +3,9 @@ require 'db.php';
 
 $t_id = $_POST['t_id'];
 
-$request = $conn->query("UPDATE tasks SET t_isComplete = 1 where t_id = '$t_id'");
+$result = $conn->query("UPDATE tasks SET t_isComplete = 1 where t_id = '$t_id'");
 
-if ($request)
+if ($result)
 {
     echoJSON(["message"=>"Успех"]);
 }

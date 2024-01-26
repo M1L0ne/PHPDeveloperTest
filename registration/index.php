@@ -82,7 +82,6 @@
     {
         username = $('input[name="username"]').val();
         password = $('input[name="password"]').val();
-
         $.ajax({
             url: "../api/reg.php",
             method: "POST",
@@ -90,9 +89,14 @@
                 username:username, password:password
             },
             success: response => {
+                console.log(response);
                 response = JSON.parse(response);
                 if (response["message"] === "Успешная регистрация")
                     location.href = "../auth";
+                if (response["message"] === "Ошибка")
+                    alert("Ошибка");
+                if (response["message"] === "Пользователь есть")
+                    alert("Пользователь с таким именем уже существует");
             }
         })
     }

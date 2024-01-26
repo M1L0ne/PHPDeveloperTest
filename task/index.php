@@ -150,17 +150,17 @@
             url:"../api/createTask.php",
             method: "POST",
             data: {
-                t_name: t_name, t_desc: t_desc, t_date: t_date, token:localStorage.getItem("token")
+                t_name: t_name, t_desc: t_desc, t_date: t_date, t_id:t_id, token:localStorage.getItem("token")
             },
             success: response=>{
                 console.log(response);
                 response = JSON.parse(response);
-                if (response["message"] === "Успех") {
-                    alert("Задача успешно добавлена!");
+                if (response["message"] === "Успешное сохранение задачи") {
+                    alert("Успешное сохранение задачи!");
                     location.href = "../main";
                 }
                 else
-                    alert("Ошибка");
+                    alert("Ошибка добавления задачи");
 
             }
         })

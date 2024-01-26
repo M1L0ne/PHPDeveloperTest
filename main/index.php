@@ -89,10 +89,8 @@
                 token:localStorage.getItem("token")
             },
             success: (response) => {
-                console.log(response)
                 response = JSON.parse(response);
                 if (response["message"] != "Токен верный"){
-                    console.log("победа :)");
                     location.href = "../auth";
                 }
             }
@@ -106,7 +104,10 @@
 
         $.ajax({
             url: "../api/showTable.php",
-            method: "GET",
+            method: "POST",
+            data:{
+                token:localStorage.getItem("token")
+            },
             success: (response) => {
                 console.log(response)
                 response = JSON.parse(response);

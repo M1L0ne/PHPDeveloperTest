@@ -88,6 +88,7 @@
     {
         username = $('input[name="username"]').val();
         password = $('input[name="password"]').val();
+        console.log(username, password);
         $.ajax({
             url: "../api/auth.php",
             method: "POST",
@@ -103,7 +104,7 @@
                     location.href = "../main";
                 }
                 else
-                    console.log("ПОРАЖЕНИЕ");
+                    alert("Неверный логин или пароль");
             }
         })
 

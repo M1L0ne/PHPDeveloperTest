@@ -11,7 +11,7 @@ if ($t_id == null)
 
 $result = $conn->query("DELETE from tasks where t_id = '$t_id'");
 
-if($result === True)
+if($result)
 {
     echoJSON(["message"=>"Успешное удаление"]);
 }
